@@ -1,12 +1,9 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <AdultAvatar />
-  </q-page>
+  <q-page class="row items-center justify-evenly"> </q-page>
 </template>
 
 <script setup lang="ts">
 import { Todo, Meta } from 'components/models';
-import AdultAvatar from 'src/components/dashboard/AdultAvatar.vue.js';
 import { ref } from 'vue';
 
 const todos = ref<Todo[]>([
