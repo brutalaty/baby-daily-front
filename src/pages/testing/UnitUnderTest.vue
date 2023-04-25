@@ -1,15 +1,15 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <AdultList :adults="adults" />
+    <ChildListItem :child="child" />
   </q-page>
 </template>
 
 <script setup lang="ts">
 //setup unit
-import AdultList from 'src/components/dashboard/AdultList.vue';
-import testData from 'src/components/dashboard/mock/Adults';
+import ChildListItem from 'src/components/dashboard/ChildListItem.vue';
+import { child as testData } from 'src/components/dashboard/mock/Children';
 
 import { ref } from 'vue';
 
-const adults = ref(testData);
+const child = ref(testData);
 </script>
