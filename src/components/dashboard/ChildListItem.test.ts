@@ -25,4 +25,11 @@ describe('Child List Item', () => {
 
     expect(image.attributes('src')).toBe(baby.avatar);
   });
+
+  it('should show the childs age', () => {
+    const wrapper = factory(baby);
+    const age = wrapper.get('[data-test="age"]');
+
+    expect(age.text()).toBe(baby.age);
+  });
 });
