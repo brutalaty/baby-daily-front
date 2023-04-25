@@ -4,6 +4,7 @@ interface Child {
   born: string;
   avatar: string;
   family_id: number;
+  age: string;
 }
 
 export default Child;
