@@ -22,22 +22,21 @@ function factory(adult: Adult): VueWrapper {
 describe('Adult List Item', () => {
   it('should have an avatar', () => {
     const wrapper = factory(manager);
-    const img = wrapper.find('img');
+    const image = wrapper.get('img');
 
-    expect(img.exists()).toBe(true);
-    expect(img.attributes('src')).toBe(manager.avatar);
+    expect(image.attributes('src')).toBe(manager.avatar);
   });
 
   it('should display the adults relation', () => {
     const wrapper = factory(manager);
-    const relation = wrapper.get('[data-test="adult-list-item-relation"]');
+    const relation = wrapper.get('[data-test="relation"]');
 
     expect(relation.text()).toBe(manager.relation);
   });
 
   it('shows a crown icon on a manager', () => {
     const wrapper = factory(manager);
-    const crown = wrapper.find('[data-test="adult-list-item-crown"]');
+    const crown = wrapper.find('[data-test="crown"]');
 
     expect(crown.exists()).toBe(true);
   });
@@ -45,14 +44,14 @@ describe('Adult List Item', () => {
   it('has no crown icon for non managers', () => {
     const wrapper = factory(adult);
 
-    const crown = wrapper.find('[data-test="adult-list-item-crown"]');
+    const crown = wrapper.find('[data-test="crown"]');
 
     expect(crown.exists()).toBe(false);
   });
 
   it('emits selected event when avatar is clicked', async () => {
     const wrapper = factory(adult);
-    const avatar = wrapper.get('[data-test="adult-list-item-avatar"]');
+    const avatar = wrapper.get('[data-test="avatar"]');
 
     await avatar.trigger('click');
 

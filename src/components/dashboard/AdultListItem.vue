@@ -1,10 +1,10 @@
 <template>
   <div class="adult-list-item">
-    <span data-test="adult-list-item-relation">{{ adult.relation }}</span>
+    <span data-test="relation">{{ adult.relation }}</span>
     <q-avatar>
       <img
         :src="adult.avatar"
-        data-test="adult-list-item-avatar"
+        data-test="avatar"
         class="adult-list-item-img"
         @click="$emit('selected', adult.id)"
       />
@@ -14,7 +14,7 @@
         text-color="yellow-8"
         floating
         rounded
-        data-test="adult-list-item-crown"
+        data-test="crown"
       >
         <q-icon name="fa-solid fa-crown" />
       </q-badge>
