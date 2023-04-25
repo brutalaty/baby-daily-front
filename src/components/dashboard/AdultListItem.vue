@@ -3,18 +3,18 @@
     <span data-test="relation">{{ adult.relation }}</span>
     <q-avatar>
       <img
-        :src="adult.avatar"
         data-test="avatar"
+        :src="adult.avatar"
         class="adult-list-item-img"
         @click="$emit('selected', adult.id)"
       />
       <q-badge
         v-if="adult.manager"
+        data-test="crown"
         color="transparent"
         text-color="yellow-8"
         floating
         rounded
-        data-test="crown"
       >
         <q-icon name="fa-solid fa-crown" />
       </q-badge>
