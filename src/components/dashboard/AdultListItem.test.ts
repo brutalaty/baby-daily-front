@@ -8,8 +8,8 @@ import AdultListItem from './AdultListItem.vue';
 //types
 import Adult from 'src/types/Adult';
 //mock data
-import { manager } from './mock/Adults';
-import { adult } from './mock/Adults';
+import { manager } from './mockData/Adults';
+import { adult } from './mockData/Adults';
 
 function factory(adult: Adult): VueWrapper {
   return mount(AdultListItem, {
