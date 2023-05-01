@@ -6,8 +6,6 @@ import { describe, expect, it, afterEach } from 'vitest';
 //components
 import ChildListVue from './ChildList.vue';
 import ChildListItemVue from './ChildListItem.vue';
-//types
-import Child from 'src/types/Child';
 //mock data
 import children from './mockData/Children';
 
@@ -25,7 +23,7 @@ describe('When given a a list of children', () => {
     });
   };
 
-  it('dispays the correct number of children', () => {
+  it('dispays the correct number of ChildListItems', () => {
     createComponent();
 
     expect(findChildListItems()).toHaveLength(children.length);
