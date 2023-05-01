@@ -18,8 +18,8 @@ function factory(child: Child): VueWrapper {
   });
 }
 
-describe('Child List Item', () => {
-  it('should have an avatar', () => {
+describe('When given a child property', () => {
+  it('should show an avatar', () => {
     const wrapper = factory(baby);
     const image = wrapper.get('img');
 
@@ -33,7 +33,7 @@ describe('Child List Item', () => {
     expect(age.text()).toBe(baby.age);
   });
 
-  it('emits selected event when its avatar is clicked', async () => {
+  it('emits selected event if its avatar is clicked', async () => {
     const wrapper = factory(baby);
     const avatar = wrapper.get('[data-test="avatar"]');
 
