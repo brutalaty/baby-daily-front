@@ -1,15 +1,3 @@
-<template>
-  <div class="adults">
-    <AdultListItemVue
-      v-for="adult in adults"
-      data-test="adult-item"
-      :adult="adult"
-      :key="adult.id"
-      @selected="handleAdultSelected"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { PropType } from 'vue';
 //components
@@ -30,6 +18,18 @@ function handleAdultSelected(id: number) {
   emit('selected', id);
 }
 </script>
+
+<template>
+  <div class="adults">
+    <AdultListItemVue
+      v-for="adult in adults"
+      data-test="adult-item"
+      :adult="adult"
+      :key="adult.id"
+      @selected="handleAdultSelected"
+    />
+  </div>
+</template>
 
 <style lang="sass">
 .adults

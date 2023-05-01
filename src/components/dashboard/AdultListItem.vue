@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { PropType } from 'vue';
+//types
+import Adult from 'src/types/Adult';
+
+const props = defineProps({
+  adult: {
+    required: true,
+    type: Object as PropType<Adult>,
+  },
+});
+
+const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+
+function handleAdultSelected() {
+  emit('selected', props.adult.id);
+}
+</script>
+
 <template>
   <div class="adult-list-item">
     <span data-test="relation">{{ adult.relation }}</span>
@@ -20,25 +39,6 @@
     </q-avatar>
   </div>
 </template>
-
-<script setup lang="ts">
-import { PropType } from 'vue';
-//types
-import Adult from 'src/types/Adult';
-
-const props = defineProps({
-  adult: {
-    required: true,
-    type: Object as PropType<Adult>,
-  },
-});
-
-const emit = defineEmits<{ (e: 'selected', id: number): void }>();
-
-function handleAdultSelected() {
-  emit('selected', props.adult.id);
-}
-</script>
 
 <style lang="sass">
 .adult-list-item
