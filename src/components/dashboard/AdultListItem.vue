@@ -1,13 +1,12 @@
 <template>
   <div class="adult-list-item">
     <span data-test="relation">{{ adult.relation }}</span>
-    <q-avatar>
-      <img
-        data-test="avatar"
-        :src="adult.avatar"
-        class="adult-list-item-img"
-        @click="$emit('selected', adult.id)"
-      />
+    <q-avatar
+      data-test="avatar"
+      @click="handleAdultSelected"
+      class="adult-list-item-avatar"
+    >
+      <img :src="adult.avatar" class="adult-list-item-img" />
       <q-badge
         v-if="adult.manager"
         data-test="crown"
@@ -34,7 +33,11 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits<{ (e: 'selected', id: number): void }>();
+const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+
+function handleAdultSelected() {
+  emit('selected', props.adult.id);
+}
 </script>
 
 <style lang="sass">
@@ -43,8 +46,8 @@ const emits = defineEmits<{ (e: 'selected', id: number): void }>();
   flex-direction: column
   align-items: center
 
-.adult-list-item-img
-  cursor: pointer
-  &:hover
-    filter: brightness(1.1)
+  &-avatar
+    cursor: pointer
+    &:hover
+      filter: brightness(1.1)
 </style>
