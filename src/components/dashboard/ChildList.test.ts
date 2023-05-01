@@ -1,7 +1,7 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, afterEach } from 'vitest';
 
 //components
 import ChildListVue from './ChildList.vue';
@@ -11,24 +11,32 @@ import Child from 'src/types/Child';
 //mock data
 import children from './mockData/Children';
 
-function factory(children: Child[]): VueWrapper {
-  return mount(ChildListVue, { props: { children: children } });
-}
+describe('When given a a list of children', () => {
+  let wrapper: VueWrapper;
 
-describe('Child List', () => {
+  const findChildListItems = () => wrapper.findAllComponents(ChildListItemVue);
+
+  const createComponent = (options: object = {}) => {
+    wrapper = mount(ChildListVue, {
+      props: {
+        children: children,
+      },
+      ...options,
+    });
+  };
+
   it('dispays the correct number of children', () => {
-    const wrapper = factory(children);
-    const items = wrapper.findAllComponents(ChildListItemVue);
+    createComponent();
 
-    expect(items).toHaveLength(children.length);
+    expect(findChildListItems()).toHaveLength(children.length);
   });
 
-  it('should re emit a childs selected event', () => {
-    const wrapper = factory(children);
-    const childItems = wrapper.findAllComponents(ChildListItemVue);
+  it('should re emit any child selected events', () => {
+    createComponent();
+    const childItems = findChildListItems();
 
-    childItems[0].vm.handleChildSelected(1);
-    childItems[1].vm.handleChildSelected(2);
+    childItems[0].vm.$emit('selected', children[0].id);
+    childItems[1].vm.$emit('selected', children[1].id);
 
     expect(wrapper.emitted().selected[0]).toEqual([1]);
     expect(wrapper.emitted().selected[1]).toEqual([2]);
