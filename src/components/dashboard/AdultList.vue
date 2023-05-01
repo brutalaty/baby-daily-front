@@ -1,11 +1,11 @@
 <template>
-  <AdultListItem v-for="adult in adults" :adult="adult" :key="adult.id" />
+    <AdultListItemVue
 </template>
 
 <script setup lang="ts">
 import { defineProps, PropType } from 'vue';
 //components
-import AdultListItem from './AdultListItem.vue';
+import AdultListItemVue from './AdultListItem.vue';
 //types
 import Adult from 'src/types/Adult';
 
