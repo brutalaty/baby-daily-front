@@ -1,10 +1,16 @@
 <template>
-  <q-avatar>
-    <img class="child-img" :src="child.avatar" />
-  </q-avatar>
-  <span data-test="age" class="child-age">
-    {{ child.age }}
-  </span>
+  <div class="child-list-item">
+    <q-avatar
+      data-test="avatar"
+      @clicked="handleChildSelected"
+      class="child-list-item-avatar"
+    >
+      <img class="child-img" :src="child.avatar" />
+    </q-avatar>
+    <span data-test="age" class="child-age">
+      {{ child.age }}
+    </span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -18,4 +24,22 @@ const props = defineProps({
     type: Object as PropType<Child>,
   },
 });
+
+const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+
+function handleChildSelected() {
+  emit('selected', props.child.id);
+}
 </script>
+
+<style lang="sass">
+.child-list-item
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  &-avatar
+    cursor: pointer
+    &:hover
+      filter: brightness(1.1)
+</style>

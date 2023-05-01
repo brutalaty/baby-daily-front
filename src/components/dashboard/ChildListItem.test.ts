@@ -8,7 +8,7 @@ import ChildListItem from './ChildListItem.vue';
 //types
 import Child from 'src/types/Child';
 //mock data
-import { child as baby } from './mock/Children';
+import { child as baby } from './mockData/Children';
 
 function factory(child: Child): VueWrapper {
   return mount(ChildListItem, {
@@ -31,5 +31,14 @@ describe('Child List Item', () => {
     const age = wrapper.get('[data-test="age"]');
 
     expect(age.text()).toBe(baby.age);
+  });
+
+  it('emits selected event when its avatar is clicked', async () => {
+    const wrapper = factory(baby);
+    const avatar = wrapper.get('[data-test="avatar"]');
+
+    await avatar.trigger('clicked');
+
+    expect(wrapper.emitted().selected[0]).toEqual([baby.id]);
   });
 });
