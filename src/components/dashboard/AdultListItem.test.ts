@@ -11,49 +11,50 @@ import Adult from 'src/types/Adult';
 import { manager } from './mockData/Adults';
 import { adult } from './mockData/Adults';
 
-function factory(adult: Adult): VueWrapper {
-  return mount(AdultListItem, {
-    props: {
-      adult: adult,
-    },
-  });
-}
+describe('When given an Adult', () => {
+  let wrapper: VueWrapper;
 
-describe('Adult List Item', () => {
+  const getImage = () => wrapper.get('img');
+  const getRelation = () => wrapper.get('[data-test="relation"]');
+  const findCrown = () => wrapper.find('[data-test="crown"]');
+  const getAvatar = () => wrapper.get('[data-test="avatar"]');
+
+  const createComponent = (adult: Adult) => {
+    wrapper = mount(AdultListItem, {
+      props: {
+        adult: adult,
+      },
+    });
+  };
+
   it('should have an avatar', () => {
-    const wrapper = factory(manager);
-    const image = wrapper.get('img');
+    createComponent(adult);
 
-    expect(image.attributes('src')).toBe(manager.avatar);
+    expect(getImage().attributes('src')).toBe(adult.avatar);
   });
 
-  it('should display the adults relation', () => {
-    const wrapper = factory(manager);
-    const relation = wrapper.get('[data-test="relation"]');
+  it('should display the adults relation to the family', () => {
+    createComponent(adult);
 
-    expect(relation.text()).toBe(manager.relation);
+    expect(getRelation().text()).toBe(adult.relation);
   });
 
   it('shows a crown icon on a manager', () => {
-    const wrapper = factory(manager);
-    const crown = wrapper.find('[data-test="crown"]');
+    createComponent(manager);
 
-    expect(crown.exists()).toBe(true);
+    expect(findCrown().exists()).toBe(true);
   });
 
   it('has no crown icon for non managers', () => {
-    const wrapper = factory(adult);
+    createComponent(adult);
 
-    const crown = wrapper.find('[data-test="crown"]');
-
-    expect(crown.exists()).toBe(false);
+    expect(findCrown().exists()).toBe(false);
   });
 
-  it('emits selected event when avatar is clicked', async () => {
-    const wrapper = factory(adult);
-    const avatar = wrapper.get('[data-test="avatar"]');
+  it('emits a selected event if the avatar is clicked', async () => {
+    createComponent(adult);
 
-    await avatar.trigger('click');
+    await getAvatar().trigger('click');
 
     expect(wrapper.emitted().selected[0]).toEqual([adult.id]);
   });
