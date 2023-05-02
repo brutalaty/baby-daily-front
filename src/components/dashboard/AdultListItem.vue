@@ -46,6 +46,9 @@ function handleAdultSelected() {
   flex-direction: column
   align-items: center
 
+  &-img
+    line-height: 48px
+
   &-avatar
     cursor: pointer
     &:hover
