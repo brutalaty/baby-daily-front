@@ -32,6 +32,8 @@ describe('When given a list of adults', () => {
     createComponent();
     const items = findAdultListItems();
 
+    expect(wrapper.emitted().selected).toBeUndefined();
+
     items[0].vm.$emit('selected', 1);
     items[1].vm.$emit('selected', 2);
 
