@@ -1,7 +1,7 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
-import { describe, expect, it, afterEach } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 //components
 import ChildListVue from './ChildList.vue';
