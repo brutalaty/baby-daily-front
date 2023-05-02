@@ -30,6 +30,13 @@ describe('When given an Adult', () => {
     expect(getImage().attributes('src')).toBe(adult.avatar);
   });
 
+  it('should have the adults initials as alt text', () => {
+    createComponent(adult);
+
+    expect(adult.name).toEqual('Grace Boss');
+    expect(getImage().attributes('alt')).toEqual('G B');
+  });
+
   it('should display the adults relation to the family', () => {
     createComponent(adult);
 

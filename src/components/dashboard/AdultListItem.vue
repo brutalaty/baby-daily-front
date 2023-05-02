@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 
 import Adult from 'src/types/Adult';
 
@@ -11,6 +11,15 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+
+const avatarAltText = computed(() => adultsInitials());
+
+const adultsInitials = () =>
+  props.adult.name
+    .split(' ')
+    .map((el) => el[0])
+    .join(' ')
+    .toUpperCase();
 
 function handleAdultSelected() {
   emit('selected', props.adult.id);
@@ -25,7 +34,11 @@ function handleAdultSelected() {
       @click="handleAdultSelected"
       class="adult-list-item-avatar"
     >
-      <img :src="adult.avatar" class="adult-list-item-img" />
+      <img
+        :src="adult.avatar"
+        class="adult-list-item-img"
+        :alt="avatarAltText"
+      />
       <q-badge
         v-if="adult.manager"
         data-test="crown"
@@ -48,6 +61,10 @@ function handleAdultSelected() {
 
   &-img
     line-height: 48px
+    text-align: center
+    display: flex
+    align-items: center
+    justify-content: center
 
   &-avatar
     cursor: pointer
