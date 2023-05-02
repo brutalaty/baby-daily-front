@@ -3,10 +3,8 @@ installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-//components
 import ChildListVue from './ChildList.vue';
 import ChildListItemVue from './ChildListItem.vue';
-//mock data
 import children from './mockData/Children';
 
 describe('When given a a list of children', () => {

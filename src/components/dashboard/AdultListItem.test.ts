@@ -3,11 +3,8 @@ installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-//components
-import AdultListItem from './AdultListItem.vue';
-//types
+import AdultListItemVue from './AdultListItem.vue';
 import Adult from 'src/types/Adult';
-//mock data
 import { manager } from './mockData/Adults';
 import { adult } from './mockData/Adults';
 
@@ -20,7 +17,7 @@ describe('When given an Adult', () => {
   const getAvatar = () => wrapper.get('[data-test="avatar"]');
 
   const createComponent = (adult: Adult) => {
-    wrapper = mount(AdultListItem, {
+    wrapper = mount(AdultListItemVue, {
       props: {
         adult: adult,
       },

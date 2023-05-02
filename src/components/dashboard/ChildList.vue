@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-//components
+
 import ChildListItemVue from './ChildListItem.vue';
-//types
 import Child from 'src/types/Child';
 
 defineProps({

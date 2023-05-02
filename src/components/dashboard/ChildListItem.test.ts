@@ -3,9 +3,7 @@ installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-//components
 import ChildListItem from './ChildListItem.vue';
-//mock data
 import { child } from './mockData/Children';
 
 describe('When given a child property', () => {

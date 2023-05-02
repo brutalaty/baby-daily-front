@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-//components
+
 import AdultListItemVue from './AdultListItem.vue';
-//types
 import Adult from 'src/types/Adult';
 
 defineProps({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-//types
+
 import Adult from 'src/types/Adult';
 
 const props = defineProps({

@@ -3,10 +3,8 @@ installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-//components
 import AdultListVue from './AdultList.vue';
 import AdultListItemVue from './AdultListItem.vue';
-//mock data
 import adults from './mockData/Adults';
 
 describe('When given a list of adults', () => {
