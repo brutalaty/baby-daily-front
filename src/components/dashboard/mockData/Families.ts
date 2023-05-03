@@ -13,6 +13,13 @@ const families: Family[] = [
         manager: true,
         avatar: 'http://localhost:8000/storage/images/avatars/users/4.png',
       },
+      {
+        id: 5,
+        name: 'Wonder Nikolaus',
+        relation: 'Mother',
+        manager: false,
+        avatar: 'http://localhost:8000/storage/images/avatars/users/5.png',
+      },
     ],
     children: [
       {
