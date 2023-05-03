@@ -27,6 +27,13 @@ describe('When given a child property', () => {
     expect(getImage().attributes('src')).toBe(child.avatar);
   });
 
+  it('should show the childs initials as alt text for the avatar', () => {
+    createComponent();
+
+    expect(child.name).toEqual('Amiya Boss');
+    expect(getImage().attributes('alt')).toEqual('A B');
+  });
+
   it('should show the childs age', () => {
     createComponent();
 

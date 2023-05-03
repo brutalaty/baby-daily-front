@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 
 import Child from 'src/types/Child';
 
@@ -11,6 +11,15 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+
+const avatarAltText = computed(() => childsInitials());
+
+const childsInitials = () =>
+  props.child.name
+    .split(' ')
+    .map((el) => el[0])
+    .join(' ')
+    .toUpperCase();
 
 function handleChildSelected() {
   emit('selected', props.child.id);
@@ -24,7 +33,11 @@ function handleChildSelected() {
       @clicked="handleChildSelected"
       class="child-list-item-avatar"
     >
-      <img class="child-img" :src="child.avatar" />
+      <img
+        class="child-list-item-img"
+        :src="child.avatar"
+        :alt="avatarAltText"
+      />
     </q-avatar>
     <span data-test="age" class="child-age">
       {{ child.age }}
@@ -37,6 +50,13 @@ function handleChildSelected() {
   display: flex
   flex-direction: column
   align-items: center
+
+  &-img
+    line-height: 48px
+    text-align: center
+    display: flex
+    align-items: center
+    justify-content: center
 
   &-avatar
     cursor: pointer
