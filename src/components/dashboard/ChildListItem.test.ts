@@ -33,7 +33,7 @@ describe('When given a child property', () => {
     expect(getAge().text()).toBe(child.age);
   });
 
-  it('emits selected event if its avatar is clicked', async () => {
+  it('emits a selected event if its avatar is clicked', async () => {
     createComponent();
 
     await getAvatar().trigger('clicked');
