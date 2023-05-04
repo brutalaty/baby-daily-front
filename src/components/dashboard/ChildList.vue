@@ -11,10 +11,10 @@ defineProps({
   },
 });
 
-const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+const emit = defineEmits<{ (e: 'selected', child: Child): void }>();
 
-function handleChildSelected(id: number) {
-  emit('selected', id);
+function handleChildSelected(child: Child) {
+  emit('selected', child);
 }
 </script>
 

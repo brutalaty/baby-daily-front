@@ -13,7 +13,7 @@ describe('When given an Adult', () => {
   const getImage = () => wrapper.get('img');
   const getRelation = () => wrapper.get('[data-test="relation"]');
   const findCrown = () => wrapper.find('[data-test="crown"]');
-  const getAvatar = () => wrapper.get('[data-test="avatar"]');
+  const getAvatar = () => wrapper.get('[data-test="adult-avatar"]');
 
   const createComponent = (adult: Adult) => {
     wrapper = mount(AdultListItemVue, {
@@ -59,6 +59,6 @@ describe('When given an Adult', () => {
 
     await getAvatar().trigger('click');
 
-    expect(wrapper.emitted().selected[0]).toEqual([adult.id]);
+    expect(wrapper.emitted().selected[0]).toEqual([adult]);
   });
 });

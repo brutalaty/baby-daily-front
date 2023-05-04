@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+const emit = defineEmits<{ (e: 'selected', child: Child): void }>();
 
 //Age
 interface UnitOfTime {
@@ -37,13 +37,17 @@ const childsInitials = () =>
     .toUpperCase();
 
 function handleChildSelected() {
-  emit('selected', props.child.id);
+  emit('selected', props.child);
 }
 </script>
 
 <template>
   <div class="child">
-    <q-avatar data-test="avatar" @clicked="handleChildSelected" class="avatar">
+    <q-avatar
+      data-test="child-avatar"
+      @click="handleChildSelected"
+      class="avatar"
+    >
       <img class="img" :src="child.avatar" :alt="avatarAltText" />
     </q-avatar>
     <div class="age">

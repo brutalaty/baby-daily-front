@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+const emit = defineEmits<{ (e: 'selected', adult: Adult): void }>();
 
 const avatarAltText = computed(() => adultsInitials());
 
@@ -22,7 +22,7 @@ const adultsInitials = () =>
     .toUpperCase();
 
 function handleAdultSelected() {
-  emit('selected', props.adult.id);
+  emit('selected', props.adult);
 }
 </script>
 
@@ -30,7 +30,7 @@ function handleAdultSelected() {
   <div class="adult-list-item">
     <span data-test="relation">{{ adult.relation }}</span>
     <q-avatar
-      data-test="avatar"
+      data-test="adult-avatar"
       @click="handleAdultSelected"
       class="adult-list-item-avatar"
     >

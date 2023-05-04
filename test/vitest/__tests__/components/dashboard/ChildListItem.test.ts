@@ -12,7 +12,7 @@ describe('When given a child property', () => {
   const getImage = () => wrapper.get('img');
   const getAgeQuantity = () => wrapper.get('[data-test="age-quantity"]');
   const getAgeUnitOfTime = () => wrapper.get('[data-test="age-unit"]');
-  const getAvatar = () => wrapper.get('[data-test="avatar"]');
+  const getAvatar = () => wrapper.get('[data-test="child-avatar"]');
 
   const createComponent = () => {
     wrapper = mount(ChildListItem, {
@@ -48,8 +48,8 @@ describe('When given a child property', () => {
   it('emits a selected event if its avatar is clicked', async () => {
     createComponent();
 
-    await getAvatar().trigger('clicked');
+    await getAvatar().trigger('click');
 
-    expect(wrapper.emitted().selected[0]).toEqual([child.id]);
+    expect(wrapper.emitted().selected[0]).toEqual([child]);
   });
 });

@@ -27,14 +27,14 @@ describe('When given a a list of children', () => {
     expect(findChildListItems()).toHaveLength(children.length);
   });
 
-  it('should re emit any child selected events', () => {
+  it('should re emit any childs selected events', () => {
     createComponent();
     const childItems = findChildListItems();
 
-    childItems[0].vm.$emit('selected', children[0].id);
-    childItems[1].vm.$emit('selected', children[1].id);
+    childItems[0].vm.$emit('selected', children[0]);
+    childItems[1].vm.$emit('selected', children[1]);
 
-    expect(wrapper.emitted().selected[0]).toEqual([1]);
-    expect(wrapper.emitted().selected[1]).toEqual([2]);
+    expect(wrapper.emitted().selected[0]).toStrictEqual([children[0]]);
+    expect(wrapper.emitted().selected[1]).toStrictEqual([children[1]]);
   });
 });

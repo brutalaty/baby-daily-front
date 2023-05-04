@@ -32,10 +32,10 @@ describe('When given a list of adults', () => {
 
     expect(wrapper.emitted().selected).toBeUndefined();
 
-    items[0].vm.$emit('selected', 1);
-    items[1].vm.$emit('selected', 2);
+    items[0].vm.$emit('selected', adults[0]);
+    items[1].vm.$emit('selected', adults[1]);
 
-    expect(wrapper.emitted().selected[0]).toEqual([1]);
-    expect(wrapper.emitted().selected[1]).toEqual([2]);
+    expect(wrapper.emitted().selected[0]).toEqual([adults[0]]);
+    expect(wrapper.emitted().selected[1]).toEqual([adults[1]]);
   });
 });

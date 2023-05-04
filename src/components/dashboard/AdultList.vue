@@ -11,10 +11,10 @@ defineProps({
   },
 });
 
-const emit = defineEmits<{ (e: 'selected', id: number): void }>();
+const emit = defineEmits<{ (e: 'selected', id: Adult): void }>();
 
-function handleAdultSelected(id: number) {
-  emit('selected', id);
+function handleAdultSelected(adult: Adult) {
+  emit('selected', adult);
 }
 </script>
 
