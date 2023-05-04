@@ -6,7 +6,51 @@ import { VueWrapper, mount } from '@vue/test-utils';
 import DashboardFamilyVue from 'src/components/dashboard/DashboardFamily.vue';
 import AdultListVue from 'src/components/dashboard/AdultList.vue';
 import ChildListVue from 'src/components/dashboard/ChildList.vue';
-import { family } from 'test/vitest/data/Families';
+import { family } from 'src/data/Families';
+
+describe('manager prop', () => {
+  let wrapper: VueWrapper;
+
+  const createComponent = (manager: boolean) => {
+    wrapper = mount(DashboardFamilyVue, {
+      props: {
+        family: family,
+        manager: manager,
+      },
+    });
+  };
+
+  const findChildButton = () => wrapper.find('[data-test="add-child-button"]');
+  const findAdultButton = () => wrapper.find('[data-test="add-adult-button"]');
+
+  it('defaults to false', () => {
+    expect(DashboardFamilyVue.props.manager.default).toBe(false);
+  });
+
+  it('Shows an Add Child button if true', () => {
+    createComponent(true);
+
+    expect(findChildButton().exists()).toBe(true);
+  });
+
+  it('Shows an Invite Adult button if true', () => {
+    createComponent(true);
+
+    expect(findAdultButton().exists()).toBe(true);
+  });
+
+  it('Does not show the Add Child button if false', () => {
+    createComponent(false);
+
+    expect(findChildButton().exists()).toBe(false);
+  });
+
+  it('Does not shows the Invite Adult button if false', () => {
+    createComponent(false);
+
+    expect(findAdultButton().exists()).toBe(false);
+  });
+});
 
 describe('When given a Family', () => {
   let wrapper: VueWrapper;
@@ -49,40 +93,9 @@ describe('When given a Family', () => {
   it.todo('Display shows the active invitations');
 });
 
-describe('when an Adult is selected', () => {
-  it.todo('navigates to that adults page');
-});
-
-describe('when a Child is selected', () => {
-  it.todo('navigates to that childs page');
-});
-
-describe("DashboardFamily's manager prop", () => {
-  let wrapper: VueWrapper;
-
-  const createComponent = (manager: boolean) => {
-    wrapper = mount(DashboardFamilyVue, {
-      props: {
-        family: family,
-        manager: manager,
-      },
-    });
-  };
-
-  const findChildButton = () => wrapper.find('[data-test="add-child-button"]');
-
-  it('defaults to false', () => {
-    expect(DashboardFamilyVue.props.manager.default).toBe(false);
-  });
-
-  it('Shows an Add Child button if true', () => {
-    createComponent(true);
-
-    expect(findChildButton().exists()).toBe(true);
-  });
-  it.todo('Shows an Invite Adult button if true');
-  it.todo('routes to the add child page when the add child button is clicked');
-  it.todo('routes to the invite page when the invite adult button is clicked');
-  it.todo('Does not show the Add Child button if false');
-  it.todo('Does not shows the Invite Adult button if false');
+describe('DashboardFamily interactability', () => {
+  it.todo('emits an adult selected event when an adult is clicked');
+  it.todo('emits a child selected event when a child is clicked');
+  it.todo('emits an add child event when the add child is clicked');
+  it.todo('emits an invite adult event when the invite adult is clicked');
 });
