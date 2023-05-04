@@ -21,7 +21,10 @@ defineProps({
 <template>
   <div class="dashboard-family">
     <h2 data-test="family-heading">{{ family.name }}</h2>
-    <QBtn data-test="add-child-button">add child</QBtn>
+    <div v-if="manager">
+      <QBtn data-test="add-child-button">add child</QBtn>
+      <QBtn data-test="add-adult-button">add adult</QBtn>
+    </div>
     <AdultListVue class="dashboard-adults" :adults="family.adults" />
     <ChildListVue class="dashboard-children" :children="family.children" />
   </div>
