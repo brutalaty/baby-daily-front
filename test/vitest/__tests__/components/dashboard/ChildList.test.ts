@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import ChildListVue from 'src/components/dashboard/ChildList.vue';
 import ChildListItemVue from 'src/components/dashboard/ChildListItem.vue';
-import children from 'test/vitest/data/Children';
+import children from 'src/data/Children';
 
 describe('When given a a list of children', () => {
   let wrapper: VueWrapper;

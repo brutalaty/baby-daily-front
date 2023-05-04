@@ -4,7 +4,7 @@ import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
 import ChildListItem from 'src/components/dashboard/ChildListItem.vue';
-import { child } from 'test/vitest/data/Children';
+import { child } from 'src/data/Children';
 
 describe('When given a child property', () => {
   let wrapper: VueWrapper;

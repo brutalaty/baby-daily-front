@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import AdultListVue from 'src/components/dashboard/AdultList.vue';
 import AdultListItemVue from 'src/components/dashboard/AdultListItem.vue';
-import adults from 'test/vitest/data/Adults';
+import adults from 'src/data/Adults';
 
 describe('When given a list of adults', () => {
   let wrapper: VueWrapper;
