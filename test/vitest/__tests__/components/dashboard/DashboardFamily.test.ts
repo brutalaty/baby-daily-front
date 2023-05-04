@@ -20,8 +20,10 @@ describe('manager prop', () => {
     });
   };
 
-  const findChildButton = () => wrapper.find('[data-test="add-child-button"]');
-  const findAdultButton = () => wrapper.find('[data-test="add-adult-button"]');
+  const findAddChildButton = () =>
+    wrapper.find('[data-test="add-child-button"]');
+  const findInviteAdultButton = () =>
+    wrapper.find('[data-test="invite-adult-button"]');
 
   it('defaults to false', () => {
     expect(DashboardFamilyVue.props.manager.default).toBe(false);
@@ -30,25 +32,25 @@ describe('manager prop', () => {
   it('Shows an Add Child button if true', () => {
     createComponent(true);
 
-    expect(findChildButton().exists()).toBe(true);
+    expect(findAddChildButton().exists()).toBe(true);
   });
 
   it('Shows an Invite Adult button if true', () => {
     createComponent(true);
 
-    expect(findAdultButton().exists()).toBe(true);
+    expect(findInviteAdultButton().exists()).toBe(true);
   });
 
   it('Does not show the Add Child button if false', () => {
     createComponent(false);
 
-    expect(findChildButton().exists()).toBe(false);
+    expect(findAddChildButton().exists()).toBe(false);
   });
 
   it('Does not shows the Invite Adult button if false', () => {
     createComponent(false);
 
-    expect(findAdultButton().exists()).toBe(false);
+    expect(findInviteAdultButton().exists()).toBe(false);
   });
 });
 
@@ -94,8 +96,53 @@ describe('When given a Family', () => {
 });
 
 describe('DashboardFamily interactability', () => {
-  it.todo('emits an adult selected event when an adult is clicked');
-  it.todo('emits a child selected event when a child is clicked');
-  it.todo('emits an add child event when the add child is clicked');
-  it.todo('emits an invite adult event when the invite adult is clicked');
+  let wrapper: VueWrapper;
+
+  const createComponent = () => {
+    wrapper = mount(DashboardFamilyVue, {
+      props: { family: family, manager: true },
+    });
+  };
+
+  const getAdultList = () => wrapper.getComponent(AdultListVue);
+  const getChildList = () => wrapper.getComponent(ChildListVue);
+  const getAddChildButton = () => wrapper.get('[data-test="add-child-button"]');
+  const getInviteAdultButton = () =>
+    wrapper.get('[data-test="invite-adult-button"]');
+
+  it('emits an adultSelected event when an adult is clicked', () => {
+    createComponent();
+
+    getAdultList().vm.$emit('selected', family.adults[0]);
+
+    expect(wrapper.emitted().adultSelected[0]).toStrictEqual([
+      family.adults[0],
+    ]);
+  });
+
+  it('emits a childSelected event when a child is clicked', () => {
+    createComponent();
+
+    getChildList().vm.$emit('selected', family.children[0]);
+
+    expect(wrapper.emitted().childSelected[0]).toStrictEqual([
+      family.children[0],
+    ]);
+  });
+
+  it('emits an addChild event when the add child is clicked', async () => {
+    createComponent();
+
+    await getAddChildButton().trigger('click');
+
+    expect(wrapper.emitted().addChild[0]).toStrictEqual([family]);
+  });
+
+  it('emits an inviteAdult event when the invite adult is clicked', async () => {
+    createComponent();
+
+    await getInviteAdultButton().trigger('click');
+
+    expect(wrapper.emitted().inviteAdult[0]).toStrictEqual([family]);
+  });
 });
