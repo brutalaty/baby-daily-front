@@ -3,9 +3,9 @@ installQuasar();
 import { VueWrapper, mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-import AdultListVue from './AdultList.vue';
-import AdultListItemVue from './AdultListItem.vue';
-import adults from './mockData/Adults';
+import AdultListVue from 'src/components/dashboard/AdultList.vue';
+import AdultListItemVue from 'src/components/dashboard/AdultListItem.vue';
+import adults from 'test/vitest/data/Adults';
 
 describe('When given a list of adults', () => {
   let wrapper: VueWrapper;

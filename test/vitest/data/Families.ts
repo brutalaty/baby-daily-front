@@ -8,6 +8,7 @@ const families: Family[] = [
     adults: [
       {
         id: 4,
+        family_id: 5,
         name: 'Randy User',
         relation: 'Father',
         manager: true,
@@ -15,6 +16,7 @@ const families: Family[] = [
       },
       {
         id: 5,
+        family_id: 5,
         name: 'Wonder Nikolaus',
         relation: 'Mother',
         manager: false,
@@ -47,6 +49,7 @@ const families: Family[] = [
     adults: [
       {
         id: 4,
+        family_id: 6,
         name: 'Randy User',
         relation: 'Father',
         manager: true,

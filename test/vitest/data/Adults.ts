@@ -3,6 +3,7 @@ import Adult from 'src/types/Adult';
 const adults: Adult[] = [
   {
     id: 1,
+    family_id: 1,
     name: 'Da Boss',
     relation: 'Father',
     manager: true,
@@ -10,6 +11,7 @@ const adults: Adult[] = [
   },
   {
     id: 2,
+    family_id: 1,
     name: 'Grace Boss',
     relation: 'Mother',
     manager: false,

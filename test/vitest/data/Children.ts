@@ -7,7 +7,7 @@ const children: Child[] = [
     born: '2021-04-13',
     family_id: 1,
     avatar: 'http://localhost:8000/storage/images/avatars/children/1.png',
-    age: '2 years',
+    age: '2 years 4 months',
   },
   {
     id: 2,

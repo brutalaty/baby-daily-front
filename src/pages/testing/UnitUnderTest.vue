@@ -1,7 +1,7 @@
 <script setup lang="ts">
 //setup unit
-import AdultList from 'src/components/dashboard/AdultList.vue';
-import { default as testData } from 'src/components/dashboard/mockData/Adults';
+import ComponentUnderTested from 'src/components/dashboard/DashboardFamily.vue';
+import { family as testData } from 'app/test/vitest/components/dashboard/mockData/Families';
 
 import { ref } from 'vue';
 
@@ -10,6 +10,6 @@ const data = ref(testData);
 
 <template>
   <q-page class="row items-center justify-evenly">
-    <AdultList :adults="data" />
+    <ComponentUnderTested :family="data" />
   </q-page>
 </template>
