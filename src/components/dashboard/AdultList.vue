@@ -22,7 +22,7 @@ function handleAdultSelected(adult: Adult) {
   <div class="adults">
     <AdultListItemVue
       v-for="adult in adults"
-      data-test="adult-item"
+      data-test="adult-list-item"
       :adult="adult"
       :key="adult.id"
       @selected="handleAdultSelected"

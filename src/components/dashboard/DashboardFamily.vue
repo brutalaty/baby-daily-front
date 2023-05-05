@@ -55,11 +55,13 @@ function handleInviteAdultClicked() {
       >
     </div>
     <AdultListVue
+      data-test="adult-list"
       class="dashboard-adults"
       :adults="family.adults"
       @selected="handleAdultSelected"
     />
     <ChildListVue
+      data-test="child-list"
       class="dashboard-children"
       :children="family.children"
       @selected="handleChildSelected"

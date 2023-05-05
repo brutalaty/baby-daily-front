@@ -1,23 +1,22 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { VueWrapper, mount } from '@vue/test-utils';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
 import ChildListVue from 'src/components/dashboard/ChildList.vue';
-import ChildListItemVue from 'src/components/dashboard/ChildListItem.vue';
 import children from 'src/data/Children';
 
 describe('When given a a list of children', () => {
   let wrapper: VueWrapper;
 
-  const findChildListItems = () => wrapper.findAllComponents(ChildListItemVue);
+  const findChildListItems = () =>
+    wrapper.findAllComponents('[data-test="child-item"]');
 
-  const createComponent = (options: object = {}) => {
-    wrapper = mount(ChildListVue, {
+  const createComponent = () => {
+    wrapper = shallowMount(ChildListVue, {
       props: {
         children: children,
       },
-      ...options,
     });
   };
 

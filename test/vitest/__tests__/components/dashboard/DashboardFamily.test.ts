@@ -1,18 +1,22 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
 import { describe, it, expect } from 'vitest';
-import { VueWrapper, mount } from '@vue/test-utils';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
 
 import DashboardFamilyVue from 'src/components/dashboard/DashboardFamily.vue';
-import AdultListVue from 'src/components/dashboard/AdultList.vue';
-import ChildListVue from 'src/components/dashboard/ChildList.vue';
 import { family } from 'src/data/Families';
+
+const ADULT_LIST_COMPONENT = '[data-test="adult-list"]';
+const CHILD_LIST_COMPONENT = '[data-test="child-list"]';
+const ADD_CHILD_BUTTON = '[data-test="add-child-button"]';
+const INVITE_ADULT_BUTTON = '[data-test="invite-adult-button"]';
+const FAMILY_HEADING = '[data-test="family-heading"]';
 
 describe('manager prop', () => {
   let wrapper: VueWrapper;
 
   const createComponent = (manager: boolean) => {
-    wrapper = mount(DashboardFamilyVue, {
+    wrapper = shallowMount(DashboardFamilyVue, {
       props: {
         family: family,
         manager: manager,
@@ -20,10 +24,8 @@ describe('manager prop', () => {
     });
   };
 
-  const findAddChildButton = () =>
-    wrapper.find('[data-test="add-child-button"]');
-  const findInviteAdultButton = () =>
-    wrapper.find('[data-test="invite-adult-button"]');
+  const findAddChildButton = () => wrapper.find(ADD_CHILD_BUTTON);
+  const findInviteAdultButton = () => wrapper.find(INVITE_ADULT_BUTTON);
 
   it('defaults to false', () => {
     expect(DashboardFamilyVue.props.manager.default).toBe(false);
@@ -58,15 +60,15 @@ describe('When given a Family', () => {
   let wrapper: VueWrapper;
 
   const createComponent = (options: object = {}) => {
-    wrapper = mount(DashboardFamilyVue, {
+    wrapper = shallowMount(DashboardFamilyVue, {
       props: { family: family },
       ...options,
     });
   };
 
-  const findHeading = () => wrapper.find('[data-test="family-heading"]');
-  const findAdultList = () => wrapper.findComponent(AdultListVue);
-  const findChildList = () => wrapper.findComponent(ChildListVue);
+  const findHeading = () => wrapper.find(FAMILY_HEADING);
+  const findAdultList = () => wrapper.findComponent(ADULT_LIST_COMPONENT);
+  const findChildList = () => wrapper.findComponent(CHILD_LIST_COMPONENT);
 
   it('requires a family', () => {
     expect(DashboardFamilyVue.props.family.required).toBe(true);
@@ -83,7 +85,6 @@ describe('When given a Family', () => {
     createComponent();
 
     expect(findAdultList().exists()).toBe(true);
-    expect(wrapper.html()).contains(family.adults[0].relation);
   });
 
   it('Displays Children', () => {
@@ -99,16 +100,15 @@ describe('DashboardFamily interactability', () => {
   let wrapper: VueWrapper;
 
   const createComponent = () => {
-    wrapper = mount(DashboardFamilyVue, {
+    wrapper = shallowMount(DashboardFamilyVue, {
       props: { family: family, manager: true },
     });
   };
 
-  const getAdultList = () => wrapper.getComponent(AdultListVue);
-  const getChildList = () => wrapper.getComponent(ChildListVue);
-  const getAddChildButton = () => wrapper.get('[data-test="add-child-button"]');
-  const getInviteAdultButton = () =>
-    wrapper.get('[data-test="invite-adult-button"]');
+  const getAdultList = () => wrapper.getComponent(ADULT_LIST_COMPONENT);
+  const getChildList = () => wrapper.getComponent(CHILD_LIST_COMPONENT);
+  const getAddChildButton = () => wrapper.get(ADD_CHILD_BUTTON);
+  const getInviteAdultButton = () => wrapper.get(INVITE_ADULT_BUTTON);
 
   it('emits an adultSelected event when an adult is clicked', () => {
     createComponent();

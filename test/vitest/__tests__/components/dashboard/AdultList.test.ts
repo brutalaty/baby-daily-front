@@ -1,6 +1,6 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { VueWrapper, mount } from '@vue/test-utils';
+import { VueWrapper, mount, shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
 import AdultListVue from 'src/components/dashboard/AdultList.vue';
@@ -10,10 +10,11 @@ import adults from 'src/data/Adults';
 describe('When given a list of adults', () => {
   let wrapper: VueWrapper;
 
-  const findAdultListItems = () => wrapper.findAllComponents(AdultListItemVue);
+  const findAdultListItems = () =>
+    wrapper.findAllComponents('[data-test="adult-list-item"]');
 
   const createComponent = (options: object = {}) => {
-    wrapper = mount(AdultListVue, {
+    wrapper = shallowMount(AdultListVue, {
       props: {
         adults: adults,
       },
