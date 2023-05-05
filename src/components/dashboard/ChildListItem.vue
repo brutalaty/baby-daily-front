@@ -42,48 +42,49 @@ function handleChildSelected() {
 </script>
 
 <template>
-  <div class="child">
-    <q-avatar
-      data-test="child-avatar"
-      @click="handleChildSelected"
-      class="avatar"
-    >
-      <img class="img" :src="child.avatar" :alt="avatarAltText" />
-    </q-avatar>
-    <div class="age">
-      <div data-test="age-quantity" class="quantity">
+  <div class="child-list-item">
+    <q-btn @click="handleChildSelected" rounded unelevated padding="0">
+      <q-avatar data-test="child-avatar" class="child-list-item-avatar">
+        <img
+          class="child-list-item-img"
+          :src="child.avatar"
+          :alt="avatarAltText"
+        />
+      </q-avatar>
+    </q-btn>
+    <div class="child-list-item-age">
+      <div data-test="age-quantity" class="child-list-item-age-quantity">
         {{ ageFirstUnitOfTime.quantity }}
       </div>
-      <div data-test="age-unit" class="unit">
+      <div data-test="age-unit" class="child-list-item-age-unit">
         {{ ageFirstUnitOfTime.unit }}
       </div>
     </div>
   </div>
 </template>
 
-<style lang="sass" scoped>
-.child
+<style lang="sass">
+.child-list-item
   display: flex
   flex-direction: column
   align-items: center
-  & .img
+  &-img
+    font-size: 18px
+    text-color: black
     line-height: 48px
     text-align: center
     display: flex
     align-items: center
     justify-content: center
-
-.avatar
-    cursor: pointer
     &:hover
-      filter: brightness(1.1)
+      filter: brightness(1.05)
 
-.age
-  margin-top: 5px
-  text-align: center
-  & .quantity
-    margin-top: 4px
-    line-height: 12px
-  & .unit
-    margin-top: 0px
+  &-age
+    margin-top: 5px
+    text-align: center
+    &-quantity
+      margin-top: 4px
+      line-height: 12px
+    &-unit
+      margin-top: 0px
 </style>

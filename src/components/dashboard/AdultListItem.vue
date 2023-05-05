@@ -28,28 +28,33 @@ function handleAdultSelected() {
 
 <template>
   <div class="adult-list-item">
-    <span data-test="relation">{{ adult.relation }}</span>
-    <q-avatar
-      data-test="adult-avatar"
+    <q-btn
       @click="handleAdultSelected"
-      class="adult-list-item-avatar"
+      class="adult-list-item-button"
+      rounded
+      unelevated
+      padding="0"
     >
-      <img
-        :src="adult.avatar"
-        class="adult-list-item-img"
-        :alt="avatarAltText"
-      />
-      <q-badge
-        v-if="adult.manager"
-        data-test="crown"
-        color="transparent"
-        text-color="yellow-8"
-        floating
-        rounded
-      >
-        <q-icon name="fa-solid fa-crown" />
-      </q-badge>
-    </q-avatar>
+      <q-avatar data-test="adult-avatar" class="adult-list-item-avatar">
+        <img
+          :src="adult.avatar"
+          class="adult-list-item-img"
+          :alt="avatarAltText"
+        />
+        <q-badge
+          v-if="adult.manager"
+          data-test="crown"
+          class="adult-list-item-crown"
+          color="transparent"
+          text-color="yellow-8"
+          floating
+          rounded
+        >
+          <q-icon name="fa-solid fa-crown" />
+        </q-badge>
+      </q-avatar>
+    </q-btn>
+    <span data-test="relation">{{ adult.relation }}</span>
   </div>
 </template>
 
@@ -59,15 +64,19 @@ function handleAdultSelected() {
   flex-direction: column
   align-items: center
 
+  &-crown
+    right: 10px
+    top: -10px
+    font-size: 8px
+
   &-img
+    font-size: 18px
+    text-color: black
     line-height: 48px
     text-align: center
     display: flex
     align-items: center
     justify-content: center
-
-  &-avatar
-    cursor: pointer
     &:hover
-      filter: brightness(1.1)
+      filter: brightness(1.05)
 </style>
