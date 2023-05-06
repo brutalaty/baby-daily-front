@@ -1,6 +1,5 @@
 import { useQuasar } from 'quasar';
 useQuasar();
-
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
 import {
@@ -13,5 +12,6 @@ import DashboardFamilyVue from 'src/components/dashboard/DashboardFamily.vue';
 import { family } from 'src/data/Families';
 
 describe('', () => {
-  it.todo('');
+  it.todo('fetches families');
+  it.todo('fetches families');
 });

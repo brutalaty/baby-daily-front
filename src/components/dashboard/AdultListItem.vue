@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
-
+import AvatarButtonVue from '../AvatarButton.vue';
 import Adult from 'src/types/Adult';
 
 const props = defineProps({
@@ -28,32 +28,25 @@ function handleAdultSelected() {
 
 <template>
   <div class="adult-list-item">
-    <q-btn
+    <AvatarButtonVue
+      data-test="adult-avatar"
       @click="handleAdultSelected"
-      class="adult-list-item-button"
-      rounded
-      unelevated
-      padding="0"
+      :src="adult.avatar"
+      :alt="avatarAltText"
     >
-      <q-avatar data-test="adult-avatar" class="adult-list-item-avatar">
-        <img
-          :src="adult.avatar"
-          class="adult-list-item-img"
-          :alt="avatarAltText"
-        />
-        <q-badge
-          v-if="adult.manager"
-          data-test="crown"
-          class="adult-list-item-crown"
-          color="transparent"
-          text-color="yellow-8"
-          floating
-          rounded
-        >
-          <q-icon name="fa-solid fa-crown" />
-        </q-badge>
-      </q-avatar>
-    </q-btn>
+      <q-badge
+        v-if="adult.manager"
+        data-test="crown"
+        class="adult-list-item-crown"
+        color="transparent"
+        text-color="yellow-8"
+        floating
+        rounded
+      >
+        <q-icon name="fa-solid fa-crown" />
+      </q-badge>
+    </AvatarButtonVue>
+
     <span data-test="relation">{{ adult.relation }}</span>
   </div>
 </template>
@@ -68,15 +61,4 @@ function handleAdultSelected() {
     right: 10px
     top: -10px
     font-size: 8px
-
-  &-img
-    font-size: 18px
-    text-color: black
-    line-height: 48px
-    text-align: center
-    display: flex
-    align-items: center
-    justify-content: center
-    &:hover
-      filter: brightness(1.05)
 </style>

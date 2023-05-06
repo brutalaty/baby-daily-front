@@ -11,12 +11,15 @@ const families = ref(familiesTestData);
 function handleAddChild(family: Family) {
   console.log(family.id);
 }
+
 function handleInviteAdult(family: Family) {
   console.log(family.id);
 }
+
 function handleChildSelected(child: Child) {
   console.log(child);
 }
+
 function handleAdultSelected(adult: Adult) {
   console.log(adult);
 }

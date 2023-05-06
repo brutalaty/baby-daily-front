@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
-
+import AvatarButtonVue from 'src/components/AvatarButton.vue';
 import Child from 'src/types/Child';
 
 const props = defineProps({
@@ -43,7 +43,7 @@ function handleChildSelected() {
 
 <template>
   <div class="child-list-item">
-    <q-btn @click="handleChildSelected" rounded unelevated padding="0">
+    <!-- <q-btn @click="handleChildSelected" rounded unelevated padding="0">
       <q-avatar data-test="child-avatar" class="child-list-item-avatar">
         <img
           class="child-list-item-img"
@@ -51,7 +51,14 @@ function handleChildSelected() {
           :alt="avatarAltText"
         />
       </q-avatar>
-    </q-btn>
+    </q-btn> -->
+    <AvatarButtonVue
+      data-test="child-avatar-button"
+      @click="handleChildSelected"
+      :src="child.avatar"
+      :alt="avatarAltText"
+    />
+
     <div class="child-list-item-age">
       <div data-test="age-quantity" class="child-list-item-age-quantity">
         {{ ageFirstUnitOfTime.quantity }}
@@ -68,16 +75,6 @@ function handleChildSelected() {
   display: flex
   flex-direction: column
   align-items: center
-  &-img
-    font-size: 18px
-    text-color: black
-    line-height: 48px
-    text-align: center
-    display: flex
-    align-items: center
-    justify-content: center
-    &:hover
-      filter: brightness(1.05)
 
   &-age
     margin-top: 5px
