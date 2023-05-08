@@ -77,6 +77,10 @@ const families: Family[] = [
   },
 ];
 
+const mockFamiliesGetResponse = {
+  data: [...families],
+};
+
 const family: Family = families[0];
 
-export { families as default, families, family };
+export { families as default, families, family, mockFamiliesGetResponse };
