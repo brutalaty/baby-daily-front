@@ -74,4 +74,15 @@ function handleInviteAdultClicked() {
   display: flex
   flex-direction: column
   justify-content: left
+
+.dashboard-adults
+  margin: 20px 0 10px
+  padding: 20px 10px
+  border-radius: 20px
+  background: teal
+
+.dashboard-children
+  padding: 20px 10px
+  border-radius: 20px
+  background: aqua
 </style>
