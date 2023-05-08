@@ -1,10 +1,9 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
 import AdultListVue from 'src/components/dashboard/AdultList.vue';
-import AdultListItemVue from 'src/components/dashboard/AdultListItem.vue';
 import adults from 'src/data/Adults';
 
 describe('When given a list of adults', () => {
