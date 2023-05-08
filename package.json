@@ -46,7 +46,8 @@
     "eslint-plugin-vue": "^9.0.0",
     "prettier": "^2.5.1",
     "typescript": "^4.5.4",
-    "vitest": "^0.15.0"
+    "vitest": "^0.15.0",
+    "@pinia/testing": "^0.0.16"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",
