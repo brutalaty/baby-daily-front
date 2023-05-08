@@ -43,15 +43,6 @@ function handleChildSelected() {
 
 <template>
   <div class="child-list-item">
-    <!-- <q-btn @click="handleChildSelected" rounded unelevated padding="0">
-      <q-avatar data-test="child-avatar" class="child-list-item-avatar">
-        <img
-          class="child-list-item-img"
-          :src="child.avatar"
-          :alt="avatarAltText"
-        />
-      </q-avatar>
-    </q-btn> -->
     <AvatarButtonVue
       data-test="child-avatar-button"
       @click="handleChildSelected"
@@ -79,6 +70,9 @@ function handleChildSelected() {
   &-age
     margin-top: 5px
     text-align: center
+    border-radius: 5px
+    border: solid 2px green
+    padding: 0 4px 0 4px
     &-quantity
       margin-top: 4px
       line-height: 12px
