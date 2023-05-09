@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { readonly, computed, ref } from 'vue';
-import { useLoading, useError } from 'src/composables/apiFetchState';
+import { useIsLoading } from 'src/composables/isloading';
+import { useHasError } from 'src/composables/haserror';
 import { api } from 'src/boot/axios';
 import Family from 'src/types/Family';
 
@@ -24,9 +25,9 @@ export const useFamiliesStore = defineStore('families', () => {
     }
   }
 
-  const { hasError, setErrorOn, setErrorOff } = useError();
+  const { hasError, setErrorOn, setErrorOff } = useHasError();
 
-  const { isLoading, setLoadingOn, setLoadingOff } = useLoading();
+  const { isLoading, setLoadingOn, setLoadingOff } = useIsLoading();
 
   return {
     families,
