@@ -13,15 +13,12 @@ onBeforeMount(() => {
 
 <template>
   <q-page class="row items-center justify-evenly">
-    <DashboardError
-      data-test="dashboard-loading-error"
-      v-if="familiesStore.hasError"
-    />
+    <DashboardError v-if="familiesStore.hasError" data-test="dashboard-error" />
     <DashboardSkeleton
+      v-else-if="familiesStore.isLoading"
       data-test="dashboard-loading"
-      v-if="familiesStore.isLoading"
     />
-    <div v-else>content</div>
+    <div v-else data-test="dashboard-content">content</div>
   </q-page>
 </template>
 

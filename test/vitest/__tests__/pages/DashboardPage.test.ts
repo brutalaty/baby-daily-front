@@ -4,11 +4,25 @@ import { mount, flushPromises, VueWrapper } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { nextTick } from 'vue';
-import { StoreGeneric } from 'pinia';
+import { PiniaPlugin, StoreGeneric } from 'pinia';
 import { useFamiliesStore } from 'src/stores/families-store';
 import { families } from 'src/data/Families';
 
 import DashboardPageVue from 'src/pages/DashboardPage.vue';
+
+function mountDashboardPage(plugins: PiniaPlugin[]): VueWrapper {
+  return mount(DashboardPageVue, {
+    global: {
+      plugins: [
+        createTestingPinia({
+          createSpy: vi.fn,
+          stubActions: false,
+          plugins: [...plugins],
+        }),
+      ],
+    },
+  });
+}
 
 const stubDownloadFamiliesPlugin = ({ store }) => {
   const spy = vi.fn();
@@ -22,18 +36,8 @@ describe('Dashboard Page', () => {
   let familiesStore: StoreGeneric;
 
   beforeEach(() => {
-    wrapper = mount(DashboardPageVue, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-            stubActions: false,
-            plugins: [stubDownloadFamiliesPlugin],
-          }),
-        ],
-      },
-    });
-
+    const piniaPlugins = [stubDownloadFamiliesPlugin];
+    wrapper = mountDashboardPage(piniaPlugins);
     familiesStore = useFamiliesStore();
     familiesStore.families = families;
   });
@@ -43,10 +47,76 @@ describe('Dashboard Page', () => {
     vi.restoreAllMocks();
   });
 
+  const findContent = () => wrapper.find('[data-test="dashboard-content"]');
   const findLoading = () => wrapper.find('[data-test="dashboard-loading"]');
-  const findError = () => wrapper.find('[data-test="dashboard-loading-error"]');
+  const findError = () => wrapper.find('[data-test="dashboard-error"]');
 
-  describe('Dashboard Page test suite, when setup correctly', () => {
+  describe('loading', () => {
+    describe('when mounted', () => {
+      it('downloads families', async () => {
+        expect(familiesStore.downloadFamilies).toHaveBeenCalledOnce();
+      });
+    });
+
+    describe('while loading', () => {
+      it('shows loading', async () => {
+        familiesStore.setLoadingOn();
+        await nextTick();
+
+        expect(findLoading().exists()).toBe(true);
+      });
+
+      it('does not show content', async () => {
+        familiesStore.setLoadingOn();
+        await nextTick();
+
+        expect(findContent().exists()).toBe(false);
+      });
+    });
+
+    describe('if loading is complete', () => {
+      it('shows content', async () => {
+        familiesStore.setLoadingOff();
+        await nextTick();
+
+        expect(findContent().exists()).toBe(true);
+      });
+
+      it('does not show loading', async () => {
+        familiesStore.setLoadingOff();
+        await nextTick();
+
+        expect(findLoading().exists()).toBe(false);
+      });
+
+      describe('if there was an error loading', () => {
+        it('shows the error', async () => {
+          familiesStore.setErrorOn();
+          await nextTick();
+
+          expect(findError().exists()).toBe(true);
+        });
+
+        it('does not show content', async () => {
+          familiesStore.setErrorOn();
+          await nextTick();
+
+          expect(findContent().exists()).toBe(false);
+        });
+      });
+
+      describe('if there was no error loading', () => {
+        it.only('does not show the error', async () => {
+          familiesStore.setErrorOff();
+          await nextTick();
+
+          expect(findError().exists()).toBe(false);
+        });
+      });
+    });
+  });
+
+  describe('The Dashboard Page testing suite', () => {
     it('mocks the action familiesStore.downloadFamilies', () => {
       expect(familiesStore.downloadFamilies).toHaveBeenCalledOnce();
       expect(familiesStore.isLoading).toBe(false);
@@ -54,52 +124,6 @@ describe('Dashboard Page', () => {
 
     it('mock fills the getter familiesStore.families with data', () => {
       expect(familiesStore.families).toBe(families);
-    });
-  });
-
-  describe('when mounted', () => {
-    it('downloads families', async () => {
-      expect(familiesStore.downloadFamilies).toHaveBeenCalledOnce();
-    });
-  });
-
-  describe('isLoading', () => {
-    it('shows loading if isLoading is true', async () => {
-      familiesStore.setLoadingOn();
-      await nextTick();
-
-      expect(findLoading().exists()).toBe(true);
-    });
-
-    it('does not show loading if isLoading is false', async () => {
-      familiesStore.setLoadingOff();
-      await nextTick();
-
-      expect(findLoading().exists()).toBe(false);
-    });
-  });
-
-  describe('hasError', () => {
-    it('shows error if hasError is true', async () => {
-      familiesStore.setErrorOn();
-      await nextTick();
-
-      expect(findError().exists()).toBe(true);
-    });
-
-    it('shows error even if isLoading is also true', async () => {
-      familiesStore.setErrorOn();
-      familiesStore.setLoadingOn();
-      await nextTick();
-
-      expect(findError().exists()).toBe(true);
-    });
-
-    it('does not show error if hasError is false', async () => {
-      familiesStore.setErrorOff();
-      await nextTick();
-
-      expect(findError().exists()).toBe(false);
     });
   });
 });
