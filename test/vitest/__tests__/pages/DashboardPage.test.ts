@@ -95,7 +95,7 @@ describe('Dashboard Page', () => {
       expect(findError().exists()).toBe(true);
     });
 
-    it('does not show error if not hasError', async () => {
+    it('does not show error if hasError is false', async () => {
       familiesStore.setErrorOff();
       await nextTick();
 
