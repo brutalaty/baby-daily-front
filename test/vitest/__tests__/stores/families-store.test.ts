@@ -36,7 +36,7 @@ describe('Families Store', () => {
       vi.spyOn(api, 'get').mockResolvedValueOnce(mockFamiliesGetResponse);
     });
 
-    it('sets loading to true', async () => {
+    it('sets loading to true', () => {
       expect(store.isLoading).toBe(false);
 
       store.downloadFamilies();
