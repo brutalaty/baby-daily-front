@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { readonly, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useIsLoading } from 'src/composables/isloading';
 import { useHasError } from 'src/composables/haserror';
 import { api } from 'src/boot/axios';
@@ -8,7 +8,7 @@ import Family from 'src/types/Family';
 export const useFamiliesStore = defineStore('families', () => {
   const state = ref<Family[]>([]);
 
-  const families = computed(() => readonly(state));
+  const families = computed(() => state.value);
 
   async function downloadFamilies() {
     setLoadingOn();

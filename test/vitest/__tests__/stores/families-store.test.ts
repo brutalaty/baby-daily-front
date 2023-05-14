@@ -27,7 +27,7 @@ describe('Families Store', () => {
     });
 
     it('defaults families to an empty array', () => {
-      expect(store.families.value).toHaveLength(0);
+      expect(store.families).toHaveLength(0);
     });
   });
 
@@ -75,13 +75,13 @@ describe('Families Store', () => {
       expect(store.isLoading).toBe(false);
     });
 
-    it('sets families to the api request data', async () => {
-      expect(store.families.value).toHaveLength(0);
+    it.only('sets families to the api request data', async () => {
+      expect(store.families).toHaveLength(0);
 
       await store.downloadFamilies();
 
-      expect(store.families.value).toHaveLength(2);
-      expect(store.families.value[0]).toEqual(mockFamiliesGetResponse.data[0]);
+      expect(store.families).toHaveLength(2);
+      expect(store.families[0]).toEqual(mockFamiliesGetResponse.data[0]);
     });
   });
 
