@@ -134,6 +134,26 @@ describe('Dashboard Page', () => {
     });
   });
 
+  describe('main section', () => {
+    it('renders a create family button', () => {
+      expect(findCreateFamilyButton().exists()).toBe(true);
+      expect(findCreateFamilyButton().attributes('label')).toBe(
+        'Create Family'
+      );
+    });
+
+    describe('when clicking the Create Family button', () => {
+      it.todo('should route to Create Family Page');
+    });
+  });
+
+  describe('families section', () => {
+    it('renders the families', async () => {
+      expect(familiesStore.families).toHaveLength(2);
+      expect(findFamilies()).toHaveLength(2);
+    });
+  });
+
   describe('The Dashboard Page testing suite', () => {
     it('mocks the action familiesStore.downloadFamilies', () => {
       expect(familiesStore.downloadFamilies).toHaveBeenCalledOnce();

@@ -20,6 +20,7 @@ onBeforeMount(() => {
     <DashboardError v-if="hasError" data-test="dashboard-error" />
     <DashboardSkeleton v-else-if="isLoading" data-test="dashboard-loading" />
     <div v-else data-test="dashboard-content">
+      <q-btn data-test="create-family-button" label="Create Family" />
       <DashboardFamily
         v-for="family in families"
         :key="family.id"
