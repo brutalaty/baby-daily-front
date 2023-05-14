@@ -1,43 +1,58 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { mount, flushPromises, VueWrapper } from '@vue/test-utils';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import {
+  shallowMount,
+  flushPromises,
+  VueWrapper,
+  config,
+} from '@vue/test-utils';
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  afterAll,
+} from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { nextTick } from 'vue';
-import { PiniaPlugin, StoreGeneric } from 'pinia';
+import { StoreGeneric } from 'pinia';
+
 import { useFamiliesStore } from 'src/stores/families-store';
 import { families } from 'src/data/Families';
 
 import DashboardPageVue from 'src/pages/DashboardPage.vue';
 
-function mountDashboardPage(plugins: PiniaPlugin[]): VueWrapper {
-  return mount(DashboardPageVue, {
+function mountDashboardPage(): VueWrapper {
+  return shallowMount(DashboardPageVue, {
     global: {
       plugins: [
         createTestingPinia({
           createSpy: vi.fn,
-          stubActions: false,
-          plugins: [...plugins],
         }),
       ],
+      // stubs: {
+      //   QPage: false,
+      // },
     },
   });
 }
-
-const stubDownloadFamiliesPlugin = ({ store }) => {
-  const spy = vi.fn();
-  const { downloadFamilies } = store.downloadFamilies;
-  store.downloadFamilies = spy;
-  spy.mockImplementation(downloadFamilies);
-};
 
 describe('Dashboard Page', () => {
   let wrapper: VueWrapper;
   let familiesStore: StoreGeneric;
 
+  beforeAll(() => {
+    config.global.renderStubDefaultSlot = true;
+  });
+  afterAll(() => {
+    config.global.renderStubDefaultSlot = true;
+  });
+
   beforeEach(() => {
-    const piniaPlugins = [stubDownloadFamiliesPlugin];
-    wrapper = mountDashboardPage(piniaPlugins);
+    wrapper = mountDashboardPage();
     familiesStore = useFamiliesStore();
     familiesStore.families = families;
   });
@@ -50,6 +65,9 @@ describe('Dashboard Page', () => {
   const findContent = () => wrapper.find('[data-test="dashboard-content"]');
   const findLoading = () => wrapper.find('[data-test="dashboard-loading"]');
   const findError = () => wrapper.find('[data-test="dashboard-error"]');
+  const findCreateFamilyButton = () =>
+    wrapper.find('[data-test="create-family-button"]');
+  const findFamilies = () => wrapper.findAll('[data-test="dashboard-family"]');
 
   describe('loading', () => {
     describe('when mounted', () => {
@@ -60,14 +78,14 @@ describe('Dashboard Page', () => {
 
     describe('while loading', () => {
       it('shows loading', async () => {
-        familiesStore.setLoadingOn();
+        familiesStore.isLoading = true;
         await nextTick();
 
         expect(findLoading().exists()).toBe(true);
       });
 
       it('does not show content', async () => {
-        familiesStore.setLoadingOn();
+        familiesStore.isLoading = true;
         await nextTick();
 
         expect(findContent().exists()).toBe(false);
@@ -76,14 +94,14 @@ describe('Dashboard Page', () => {
 
     describe('if loading is complete', () => {
       it('shows content', async () => {
-        familiesStore.setLoadingOff();
+        familiesStore.isLoading = false;
         await nextTick();
 
         expect(findContent().exists()).toBe(true);
       });
 
       it('does not show loading', async () => {
-        familiesStore.setLoadingOff();
+        familiesStore.isLoading = false;
         await nextTick();
 
         expect(findLoading().exists()).toBe(false);
@@ -91,14 +109,14 @@ describe('Dashboard Page', () => {
 
       describe('if there was an error loading', () => {
         it('shows the error', async () => {
-          familiesStore.setErrorOn();
+          familiesStore.hasError = true;
           await nextTick();
 
           expect(findError().exists()).toBe(true);
         });
 
         it('does not show content', async () => {
-          familiesStore.setErrorOn();
+          familiesStore.hasError = true;
           await nextTick();
 
           expect(findContent().exists()).toBe(false);
@@ -106,8 +124,8 @@ describe('Dashboard Page', () => {
       });
 
       describe('if there was no error loading', () => {
-        it.only('does not show the error', async () => {
-          familiesStore.setErrorOff();
+        it('does not show the error', async () => {
+          familiesStore.hasError = false;
           await nextTick();
 
           expect(findError().exists()).toBe(false);
