@@ -75,7 +75,7 @@ describe('Families Store', () => {
       expect(store.isLoading).toBe(false);
     });
 
-    it.only('sets families to the api request data', async () => {
+    it('sets families to the api request data', async () => {
       expect(store.families).toHaveLength(0);
 
       await store.downloadFamilies();
