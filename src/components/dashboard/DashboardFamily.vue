@@ -22,7 +22,7 @@ const props = defineProps({
 const emit = defineEmits<{
   (e: 'adultSelected', adult: Adult): void;
   (e: 'childSelected', child: Child): void;
-  (e: 'addChild', family: Family): void;
+  (e: 'createChild', family: Family): void;
   (e: 'inviteAdult', family: Family): void;
 }>();
 
@@ -35,7 +35,7 @@ function handleChildSelected(child: Child) {
 }
 
 function handleAddChildClicked() {
-  emit('addChild', props.family);
+  emit('createChild', props.family);
 }
 
 function handleInviteAdultClicked() {

@@ -130,12 +130,12 @@ describe('DashboardFamily interactability', () => {
     ]);
   });
 
-  it('emits an addChild event when the add child is clicked', async () => {
+  it('emits an createChild event when the add child is clicked', async () => {
     createComponent();
 
     await getAddChildButton().trigger('click');
 
-    expect(wrapper.emitted().addChild[0]).toStrictEqual([family]);
+    expect(wrapper.emitted().createChild[0]).toStrictEqual([family]);
   });
 
   it('emits an inviteAdult event when the invite adult is clicked', async () => {
