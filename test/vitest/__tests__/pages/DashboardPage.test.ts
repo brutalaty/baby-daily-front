@@ -16,9 +16,13 @@ import {
   beforeAll,
   afterAll,
 } from 'vitest';
-import { createTestingPinia } from '@pinia/testing';
+
 import { nextTick } from 'vue';
+
+import { createTestingPinia } from '@pinia/testing';
 import { StoreGeneric } from 'pinia';
+
+import { getRouter } from 'vue-router-mock';
 
 import { useFamiliesStore } from 'src/stores/families-store';
 import { families } from 'src/data/Families';
@@ -33,9 +37,6 @@ function mountDashboardPage(): VueWrapper {
           createSpy: vi.fn,
         }),
       ],
-      // stubs: {
-      //   QPage: false,
-      // },
     },
   });
 }
@@ -67,7 +68,9 @@ describe('Dashboard Page', () => {
   const findError = () => wrapper.find('[data-test="dashboard-error"]');
   const findCreateFamilyButton = () =>
     wrapper.find('[data-test="create-family-button"]');
-  const findFamilies = () => wrapper.findAll('[data-test="dashboard-family"]');
+  const findFamilies = () =>
+    wrapper.findAllComponents('[data-test="dashboard-family"]');
+  const findFirstFamily = () => findFamilies()[0];
 
   describe('loading', () => {
     describe('when mounted', () => {
@@ -143,7 +146,14 @@ describe('Dashboard Page', () => {
     });
 
     describe('when clicking the Create Family button', () => {
-      it.todo('should route to Create Family Page');
+      it('should route to the Create new Family Page', async () => {
+        await findCreateFamilyButton().trigger('click');
+
+        expect(getRouter().push).toHaveBeenCalledTimes(1);
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({ name: 'create-family' })
+        );
+      });
     });
   });
 
@@ -151,6 +161,88 @@ describe('Dashboard Page', () => {
     it('renders the families', async () => {
       expect(familiesStore.families).toHaveLength(2);
       expect(findFamilies()).toHaveLength(2);
+    });
+
+    describe('when receiving an invite-adult event', () => {
+      it('navigates to the invite adult page', async () => {
+        await wrapper.vm.$router.push('/new-location?q=silly');
+        const family = families[0];
+
+        findFirstFamily().vm.$emit('invite-adult', family);
+
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'invite-adult',
+            params: { familyId: family.id },
+          })
+        );
+      });
+    });
+
+    describe('when receiving a create-child event', () => {
+      it('navigates to the create child page', () => {
+        const child = families[0].children[0];
+
+        findFirstFamily().vm.$emit('child-selected', child);
+
+        expect(getRouter().push).toHaveBeenCalledOnce();
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'child',
+            params: { childId: child.id },
+          })
+        );
+      });
+    });
+
+    describe('when receiving an adult-selected event', () => {
+      it('navigates to the adult page', () => {
+        const adult = families[0].adults[0];
+
+        findFirstFamily().vm.$emit('adult-selected', adult);
+
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'adult',
+            params: {
+              familyId: adult.family_id,
+              adultId: adult.id,
+            },
+          })
+        );
+      });
+    });
+
+    describe('when receiving a child-selected event', () => {
+      it('navigates to the childs page', () => {
+        const child = families[0].children[0];
+
+        findFirstFamily().vm.$emit('child-selected', child);
+
+        expect(getRouter().push).toHaveBeenCalledOnce();
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'child',
+            params: { childId: child.id },
+          })
+        );
+      });
+    });
+
+    describe('when receiving a create-child event', () => {
+      it('navigates to the create childs page', () => {
+        const family = families[0];
+
+        findFirstFamily().vm.$emit('create-child', family);
+
+        expect(getRouter().push).toHaveBeenCalledOnce();
+        expect(getRouter().push).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'create-child',
+            params: { familyId: family.id },
+          })
+        );
+      });
     });
   });
 
