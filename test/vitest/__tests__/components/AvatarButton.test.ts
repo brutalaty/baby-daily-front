@@ -1,66 +1,79 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { describe, it, expect, beforeEach } from 'vitest';
-import { VueWrapper, mount } from '@vue/test-utils';
+import { describe, it, expect, beforeEach, beforeAll, afterAll } from 'vitest';
+import { VueWrapper, shallowMount, config } from '@vue/test-utils';
 
-import AvatarButtonVue from 'src/components/AvatarButton.vue';
+import AvatarButton from 'src/components/AvatarButton.vue';
 
-describe('properties', () => {
-  it('requires a src', () => {
-    expect(AvatarButtonVue.props.src.required).toBe(true);
-  });
-  it('requires altText', () => {
-    expect(AvatarButtonVue.props.alt.required).toBe(true);
-  });
-});
+const BUTTON = '[data-test="avatar-button"]';
+const IMAGE = '[data-test="avatar-button-image"]';
 
-describe('when mounted', () => {
+describe('Avatar Button', () => {
   let wrapper: VueWrapper;
 
-  const createComponent = () =>
-    (wrapper = mount(AvatarButtonVue, {
-      props: { src: 'test address', alt: 'T A' },
+  beforeAll(() => {
+    config.global.renderStubDefaultSlot = true;
+  });
+  afterAll(() => {
+    config.global.renderStubDefaultSlot = true;
+  });
+
+  beforeEach(() => {
+    createComponent();
+  });
+
+  const createComponent = (options: object = {}) =>
+    (wrapper = shallowMount(AvatarButton, {
+      props: {
+        src: 'test address',
+        alt: 'T A',
+      },
+      ...options,
     }));
 
-  const getButton = () => wrapper.find('[data-test="avatar-button"]');
-  const getImage = () => wrapper.find('[data-test="avatar-button-image"]');
+  const findButton = () => wrapper.find(BUTTON);
+  const findImage = () => wrapper.find(IMAGE);
 
-  it('emits a click event when clicked', async () => {
-    createComponent();
-
-    await getButton().trigger('click');
-
-    expect(wrapper.emitted().click).toHaveLength(1);
+  describe('src prop', () => {
+    it('is required', () => {
+      expect(AvatarButton.props.src.required).toBe(true);
+    });
   });
 
-  it('displays an image', () => {
-    createComponent();
-
-    expect(getImage().attributes('src')).toEqual('test address');
+  describe('alt prop', () => {
+    it('is required', () => {
+      expect(AvatarButton.props.alt.required).toBe(true);
+    });
   });
 
-  it('displays alt text', () => {
-    createComponent();
+  describe('button', () => {
+    describe('when clicked', () => {
+      it('emits a click event', async () => {
+        await findButton().trigger('click');
 
-    expect(getImage().attributes('alt')).toBe('T A');
+        expect(wrapper.emitted().click).toHaveLength(1);
+      });
+    });
   });
 
-  describe('slots', () => {
-    let wrapper: VueWrapper;
+  describe('image', () => {
+    it('renders', () => {
+      expect(findImage().attributes('src')).toEqual('test address');
+    });
 
+    it('displays alt text', () => {
+      expect(findImage().attributes('alt')).toBe('T A');
+    });
+  });
+
+  describe('default slot', () => {
     beforeEach(() => {
-      wrapper = mount(AvatarButtonVue, {
-        props: {
-          src: 'test src',
-          alt: 'T S',
-        },
-        slots: {
-          default: '<div>Awesome Badge</div>',
-        },
+      createComponent({
+        slots: { default: '<div>Awesome Badge</div>' },
       });
     });
 
-    it('badge slot renders', () => {
+    it('renders', () => {
       expect(wrapper.text()).toContain('Awesome Badge');
     });
   });
