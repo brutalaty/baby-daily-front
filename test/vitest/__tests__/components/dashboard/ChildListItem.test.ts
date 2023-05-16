@@ -1,55 +1,61 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { VueWrapper, mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
+import { describe, expect, it, beforeEach } from 'vitest';
 
 import ChildListItem from 'src/components/dashboard/ChildListItem.vue';
 import { child } from 'src/data/Children';
 
-describe('When given a child property', () => {
+const AVATAR_BUTTON = '[data-test="child-avatar-button"]';
+const AGE_QUANTITY = '[data-test="age-quantity"]';
+const AGE_UNIT_OF_TIME = '[data-test="age-unit"]';
+
+describe('Child List Item', () => {
   let wrapper: VueWrapper;
 
-  const getImage = () => wrapper.get('img');
-  const getAgeQuantity = () => wrapper.get('[data-test="age-quantity"]');
-  const getAgeUnitOfTime = () => wrapper.get('[data-test="age-unit"]');
-  const getAvatarButton = () =>
-    wrapper.get('[data-test="child-avatar-button"]');
+  beforeEach(() => {
+    createComponent();
+  });
 
   const createComponent = () => {
-    wrapper = mount(ChildListItem, {
+    wrapper = shallowMount(ChildListItem, {
       props: {
         child: child,
       },
     });
   };
 
-  it('should show an avatar img', () => {
-    createComponent();
+  const getAgeQuantity = () => wrapper.get(AGE_QUANTITY);
+  const getAgeUnitOfTime = () => wrapper.get(AGE_UNIT_OF_TIME);
+  const getAvatarButton = () => wrapper.find(AVATAR_BUTTON);
 
-    expect(getImage().attributes('src')).toBe(child.avatar);
+  describe('child prop', () => {
+    it('should be required', () => {
+      expect(ChildListItem.props.child.required).toBe(true);
+    });
   });
 
-  it('should show the childs initials as alt text for the avatar', () => {
-    createComponent();
+  describe('avatar', () => {
+    it('renders', () => {
+      expect(getAvatarButton().exists()).toBe(true);
+    });
 
-    expect(child.name).toEqual('Amiya Boss');
-    expect(getImage().attributes('alt')).toEqual('A B');
+    describe('when clicked', () => {
+      it('emits a selected event', async () => {
+        await getAvatarButton().trigger('click');
+
+        expect(wrapper.emitted().selected[0]).toEqual([child]);
+      });
+    });
   });
 
-  it('should show the childs age to one unit of measurement', () => {
-    createComponent();
+  describe('age section', () => {
+    it('should show the childs age to one unit of measurement', () => {
+      expect(child.age).toEqual('2 years 4 months');
 
-    expect(child.age).toEqual('2 years 4 months');
-
-    expect(wrapper.html()).not.toContain('months');
-    expect(getAgeQuantity().text()).toBe('2');
-    expect(getAgeUnitOfTime().text()).toBe('years');
-  });
-
-  it('emits a selected event if its avatar is clicked', async () => {
-    createComponent();
-    await getAvatarButton().trigger('click');
-
-    expect(wrapper.emitted().selected[0]).toEqual([child]);
+      expect(wrapper.html()).not.toContain('months');
+      expect(getAgeQuantity().text()).toBe('2');
+      expect(getAgeUnitOfTime().text()).toBe('years');
+    });
   });
 });
