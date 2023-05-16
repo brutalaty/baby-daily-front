@@ -45,7 +45,7 @@ describe('Families Store', () => {
         expect(store.isLoading).toBe(true);
       });
 
-      it('sets error to false', async () => {
+      it('sets error to false', () => {
         store.setErrorOn();
         expect(store.hasError).toBe(true);
 
@@ -60,10 +60,11 @@ describe('Families Store', () => {
         store.downloadFamilies();
 
         expect(api.get).toHaveBeenCalledOnce();
+        expect(api.get).toHaveBeenCalledWith('families');
       });
     });
 
-    describe('when completed', () => {
+    describe('when the action is completed', () => {
       it('sets loading to false', async () => {
         expect(store.isLoading).toBe(false);
 
