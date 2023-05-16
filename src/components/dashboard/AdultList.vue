@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 
-import AdultListItemVue from './AdultListItem.vue';
+import AdultListItem from './AdultListItem.vue';
 import Adult from 'src/types/Adult';
 
 defineProps({
@@ -20,7 +20,7 @@ function handleAdultSelected(adult: Adult) {
 
 <template>
   <div class="adults">
-    <AdultListItemVue
+    <AdultListItem
       v-for="adult in adults"
       data-test="adult-list-item"
       :adult="adult"

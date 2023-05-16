@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { QBtn } from 'quasar';
-import AdultListVue from './AdultList.vue';
-import ChildListVue from './ChildList.vue';
+import AdultList from './AdultList.vue';
+import ChildList from './ChildList.vue';
 import Adult from 'src/types/Adult';
 import Child from 'src/types/Child';
 
@@ -54,13 +54,13 @@ function handleInviteAdultClicked() {
         >invite adult</QBtn
       >
     </div>
-    <AdultListVue
+    <AdultList
       data-test="adult-list"
       class="dashboard-adults"
       :adults="family.adults"
       @selected="handleAdultSelected"
     />
-    <ChildListVue
+    <ChildList
       data-test="child-list"
       class="dashboard-children"
       :children="family.children"

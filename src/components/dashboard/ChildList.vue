@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 
-import ChildListItemVue from './ChildListItem.vue';
+import ChildListItem from './ChildListItem.vue';
 import Child from 'src/types/Child';
 
 defineProps({
@@ -20,7 +20,7 @@ function handleChildSelected(child: Child) {
 
 <template>
   <div class="children">
-    <ChildListItemVue
+    <ChildListItem
       v-for="child in children"
       data-test="child-item"
       :child="child"

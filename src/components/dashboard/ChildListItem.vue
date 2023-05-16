@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
-import AvatarButtonVue from 'src/components/AvatarButton.vue';
+import AvatarButton from 'src/components/AvatarButton.vue';
 import Child from 'src/types/Child';
 
 const props = defineProps({
@@ -43,7 +43,7 @@ function handleChildSelected() {
 
 <template>
   <div class="child-list-item">
-    <AvatarButtonVue
+    <AvatarButton
       data-test="child-avatar-button"
       @click="handleChildSelected"
       :src="child.avatar"

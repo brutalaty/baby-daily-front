@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
-import AvatarButtonVue from '../AvatarButton.vue';
+import AvatarButton from '../AvatarButton.vue';
 import Adult from 'src/types/Adult';
 
 const props = defineProps({
@@ -28,7 +28,7 @@ function handleAdultSelected() {
 
 <template>
   <div class="adult-list-item">
-    <AvatarButtonVue
+    <AvatarButton
       data-test="adult-avatar"
       @click="handleAdultSelected"
       :src="adult.avatar"
@@ -45,7 +45,7 @@ function handleAdultSelected() {
       >
         <q-icon name="fa-solid fa-crown" />
       </q-badge>
-    </AvatarButtonVue>
+    </AvatarButton>
 
     <span data-test="relation">{{ adult.relation }}</span>
   </div>
