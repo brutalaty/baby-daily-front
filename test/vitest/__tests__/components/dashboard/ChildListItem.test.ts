@@ -30,7 +30,7 @@ describe('Child List Item', () => {
   const getAvatarButton = () => wrapper.find(AVATAR_BUTTON);
 
   describe('child prop', () => {
-    it('should be required', () => {
+    it('is required', () => {
       expect(ChildListItem.props.child.required).toBe(true);
     });
   });
@@ -50,7 +50,7 @@ describe('Child List Item', () => {
   });
 
   describe('age section', () => {
-    it('should show the childs age to one unit of measurement', () => {
+    it('Shows the childs age to one unit of measurement', () => {
       expect(child.age).toEqual('2 years 4 months');
 
       expect(wrapper.html()).not.toContain('months');
