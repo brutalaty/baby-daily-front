@@ -3,7 +3,7 @@ installQuasar();
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-import AdultListVue from 'src/components/dashboard/AdultList.vue';
+import AdultList from 'src/components/dashboard/AdultList.vue';
 import adults from 'src/data/Adults';
 
 describe('When given a list of adults', () => {
@@ -13,7 +13,7 @@ describe('When given a list of adults', () => {
     wrapper.findAllComponents('[data-test="adult-list-item"]');
 
   const createComponent = (options: object = {}) => {
-    wrapper = shallowMount(AdultListVue, {
+    wrapper = shallowMount(AdultList, {
       props: {
         adults: adults,
       },

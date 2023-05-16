@@ -3,7 +3,7 @@ installQuasar();
 import { describe, it, expect, beforeEach } from 'vitest';
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 
-import DashboardFamilyVue from 'src/components/dashboard/DashboardFamily.vue';
+import DashboardFamily from 'src/components/dashboard/DashboardFamily.vue';
 import { family } from 'src/data/Families';
 
 const ADULT_LIST_COMPONENT = '[data-test="adult-list"]';
@@ -20,7 +20,7 @@ describe('Dashboard Family', () => {
   });
 
   const createComponent = (manager = false) => {
-    wrapper = shallowMount(DashboardFamilyVue, {
+    wrapper = shallowMount(DashboardFamily, {
       props: {
         family: family,
         manager: manager,
@@ -40,7 +40,7 @@ describe('Dashboard Family', () => {
 
   describe('manager prop', () => {
     it('defaults to false', () => {
-      expect(DashboardFamilyVue.props.manager.default).toBe(false);
+      expect(DashboardFamily.props.manager.default).toBe(false);
     });
 
     describe('when manager is set to true', () => {
@@ -68,7 +68,7 @@ describe('Dashboard Family', () => {
 
   describe('Family prop', () => {
     it('requires a family', () => {
-      expect(DashboardFamilyVue.props.family.required).toBe(true);
+      expect(DashboardFamily.props.family.required).toBe(true);
     });
 
     it('Displays the families name', () => {

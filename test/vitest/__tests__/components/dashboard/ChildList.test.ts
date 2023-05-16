@@ -3,7 +3,7 @@ installQuasar();
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
-import ChildListVue from 'src/components/dashboard/ChildList.vue';
+import ChildList from 'src/components/dashboard/ChildList.vue';
 import children from 'src/data/Children';
 
 describe('When given a a list of children', () => {
@@ -13,7 +13,7 @@ describe('When given a a list of children', () => {
     wrapper.findAllComponents('[data-test="child-item"]');
 
   const createComponent = () => {
-    wrapper = shallowMount(ChildListVue, {
+    wrapper = shallowMount(ChildList, {
       props: {
         children: children,
       },

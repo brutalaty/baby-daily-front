@@ -27,10 +27,10 @@ import { getRouter } from 'vue-router-mock';
 import { useFamiliesStore } from 'src/stores/families-store';
 import { families } from 'src/data/Families';
 
-import DashboardPageVue from 'src/pages/DashboardPage.vue';
+import DashboardPage from 'src/pages/DashboardPage.vue';
 
 function mountDashboardPage(): VueWrapper {
-  return shallowMount(DashboardPageVue, {
+  return shallowMount(DashboardPage, {
     global: {
       plugins: [
         createTestingPinia({
