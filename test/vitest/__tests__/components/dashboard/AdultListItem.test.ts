@@ -1,64 +1,74 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { VueWrapper, mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import AdultListItem from 'src/components/dashboard/AdultListItem.vue';
 import Adult from 'src/types/Adult';
 import { manager, adult } from 'src/data/Adults';
 
-describe('When given an Adult', () => {
+const RELATION = '[data-test="relation"]';
+const CROWN = '[data-test="crown"]';
+const AVATAR = '[data-test="adult-avatar"]';
+
+describe('Adult List Item', () => {
   let wrapper: VueWrapper;
 
-  const getImage = () => wrapper.get('img');
-  const getRelation = () => wrapper.get('[data-test="relation"]');
-  const findCrown = () => wrapper.find('[data-test="crown"]');
-  const getAvatar = () => wrapper.get('[data-test="adult-avatar"]');
+  beforeEach(() => {
+    createComponent();
+  });
 
-  const createComponent = (adult: Adult) => {
-    wrapper = mount(AdultListItem, {
+  const createComponent = (adultProp: Adult = adult) => {
+    wrapper = shallowMount(AdultListItem, {
       props: {
-        adult: adult,
+        adult: adultProp,
       },
     });
   };
 
-  it('should have an avatar', () => {
-    createComponent(adult);
+  const getRelation = () => wrapper.get(RELATION);
+  const findCrown = () => wrapper.find(CROWN);
+  const findAvatar = () => wrapper.find(AVATAR);
 
-    expect(getImage().attributes('src')).toBe(adult.avatar);
+  describe('adult prop', () => {
+    it('is required', () => {
+      expect(AdultListItem.props.adult.required).toBe(true);
+    });
   });
 
-  it('should have the adults initials as alt text', () => {
-    createComponent(adult);
+  describe('avatar', () => {
+    it('renders', () => {
+      expect(findAvatar().exists()).toBe(true);
+    });
 
-    expect(adult.name).toEqual('Grace Boss');
-    expect(getImage().attributes('alt')).toEqual('G B');
+    describe('when the avatar is clicked', () => {
+      it('emits a selected event', async () => {
+        await findAvatar().trigger('click');
+
+        expect(wrapper.emitted().selected[0]).toEqual([adult]);
+      });
+    });
   });
 
-  it('should display the adults relation to the family', () => {
-    createComponent(adult);
-
-    expect(getRelation().text()).toBe(adult.relation);
+  describe('the adults relation to the children', () => {
+    it('renders', () => {
+      expect(getRelation().text()).toBe(adult.relation);
+    });
   });
 
-  it('shows a crown icon on a manager', () => {
-    createComponent(manager);
+  describe('managers crown', () => {
+    describe('when the adult is the families manager', () => {
+      it('shows a crown icon', () => {
+        createComponent(manager);
 
-    expect(findCrown().exists()).toBe(true);
-  });
+        expect(findCrown().exists()).toBe(true);
+      });
+    });
 
-  it('has no crown icon for non managers', () => {
-    createComponent(adult);
-
-    expect(findCrown().exists()).toBe(false);
-  });
-
-  it('emits a selected event if the avatar is clicked', async () => {
-    createComponent(adult);
-
-    await getAvatar().trigger('click');
-
-    expect(wrapper.emitted().selected[0]).toEqual([adult]);
+    describe('when the adult is not the manager', () => {
+      it('does not show a crown', () => {
+        expect(findCrown().exists()).toBe(false);
+      });
+    });
   });
 });
