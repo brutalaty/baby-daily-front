@@ -1,21 +1,7 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import {
-  shallowMount,
-  flushPromises,
-  VueWrapper,
-  config,
-} from '@vue/test-utils';
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
-  afterEach,
-  beforeAll,
-  afterAll,
-} from 'vitest';
+import { shallowMount, flushPromises, VueWrapper } from '@vue/test-utils';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 import { nextTick } from 'vue';
 
@@ -44,13 +30,6 @@ function mountDashboardPage(): VueWrapper {
 describe('Dashboard Page', () => {
   let wrapper: VueWrapper;
   let familiesStore: StoreGeneric;
-
-  beforeAll(() => {
-    config.global.renderStubDefaultSlot = true;
-  });
-  afterAll(() => {
-    config.global.renderStubDefaultSlot = true;
-  });
 
   beforeEach(() => {
     wrapper = mountDashboardPage();

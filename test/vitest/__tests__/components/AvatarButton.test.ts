@@ -1,7 +1,7 @@
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest';
 installQuasar();
-import { describe, it, expect, beforeEach, beforeAll, afterAll } from 'vitest';
-import { VueWrapper, shallowMount, config } from '@vue/test-utils';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { VueWrapper, shallowMount } from '@vue/test-utils';
 
 import AvatarButton from 'src/components/AvatarButton.vue';
 
@@ -10,13 +10,6 @@ const IMAGE = '[data-test="avatar-button-image"]';
 
 describe('Avatar Button', () => {
   let wrapper: VueWrapper;
-
-  beforeAll(() => {
-    config.global.renderStubDefaultSlot = true;
-  });
-  afterAll(() => {
-    config.global.renderStubDefaultSlot = true;
-  });
 
   beforeEach(() => {
     createComponent();
